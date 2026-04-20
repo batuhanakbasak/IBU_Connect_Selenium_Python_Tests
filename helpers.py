@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 def wait_for_page_contains(driver, text, timeout=10):
+    # Sabit sleep yerine sayfada metni bekleyelim.
     WebDriverWait(driver, timeout).until(lambda d: text.lower() in d.page_source.lower())
 
 
@@ -12,6 +13,7 @@ def wait_for_elements_count(driver, by, value, count=1, timeout=10):
 
 
 def first_existing(driver, selectors):
+    # Kucuk UI degisikliklerinde test hemen kirilmasin.
     for by, value in selectors:
         elems = driver.find_elements(by, value)
         if elems:
@@ -24,6 +26,7 @@ def visible_text_contains(driver, text):
 
 
 def email_input(driver):
+    # Roller farkli HTML kullanabildigi icin birkac secici deniyoruz.
     selectors = [
         (By.CSS_SELECTOR, 'input[type="email"]'),
         (By.NAME, 'email'),
@@ -45,6 +48,7 @@ def submit_button(driver):
         (By.CSS_SELECTOR, 'button[type="submit"]'),
         (
             By.XPATH,
+            # Buton yazi farkli olsa da submit yakalansin.
             "//button[contains(translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'sign in')]",
         ),
         (By.XPATH, "//input[@type='submit']"),

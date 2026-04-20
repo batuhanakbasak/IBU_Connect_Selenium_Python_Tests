@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 from reporting import (
@@ -18,12 +18,14 @@ from reporting import (
     write_run_artifacts,
 )
 
-
+# Pytest bu isimdeki fonksiyonu otomatik cagirir.
 def pytest_configure(config):
+    # Tum kosu boyunca kullanilacak ortak rapor state'i.
     config._execution_report_state = build_run_state(config.rootpath, config.invocation_params.args)
 
-
+# Her testten hemen once pytest bunu otomatik cagirir.
 def pytest_runtest_setup(item):
+    # Her test icin bos bir execution kaydi aciyoruz.
     item._execution_record = {
         "nodeid": item.nodeid,
         "status": "Blocked",
@@ -35,9 +37,11 @@ def pytest_runtest_setup(item):
         "page_title": "",
     }
 
-
+# Hook = pytest'in kendi olaylarina baglanan ozel fonksiyon.
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
+    # Pytest setup/call/teardown sonucunu burada yakaliyor.
+    # `yield` sonrasi pytest'in olusturdugu report nesnesi geri geliyor.
     outcome = yield
     report = outcome.get_result()
     setattr(item, f"rep_{report.when}", report)
@@ -59,6 +63,7 @@ def pytest_runtest_makereport(item, call):
         record["execution_date"] = display_time()
 
     if report.when == "teardown":
+        # Test body gecti ama teardown patlarsa sonucu fail'e cekiyoruz.
         if report.failed and record["status"] == "Pass":
             record["status"] = "Fail"
             record["pytest_outcome"] = "failed"
@@ -68,23 +73,27 @@ def pytest_runtest_makereport(item, call):
         state = item.config._execution_report_state
         state["tests"].append(record)
 
-
+# Tum testler bittikten sonra pytest bunu otomatik cagirir.
 def pytest_sessionfinish(session, exitstatus):
+    # Tum testler bitince rapor dosyalari uretiliyor.
     state = session.config._execution_report_state
     finalize_summary(state)
     build_attachment_package(state)
     _, markdown_path = write_run_artifacts(state)
     session.config._execution_report_markdown = markdown_path
 
-
+# Terminal ozeti basilirken pytest bu fonksiyona ugrar.
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    # Raporun nereye yazildigini terminalde goster.
     markdown_path = getattr(config, "_execution_report_markdown", None)
     if markdown_path:
         terminalreporter.write_sep("-", f"execution report written to {markdown_path}")
 
 
+# Fixture = test fonksiyonuna isimle enjekte edilen yardimci kaynak.
 @pytest.fixture
 def driver(request):
+    # Her test temiz Chrome ile baslar; state sizmasi azalir.
     options = Options()
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
@@ -97,10 +106,12 @@ def driver(request):
     state = request.config._execution_report_state
     update_browser_metadata(state, driver.capabilities)
 
+    # `yield` oncesi setup, sonrasi teardown gibi calisir.
     yield driver
 
     record = getattr(request.node, "_execution_record", None)
     if record is not None:
+        # Son ekran goruntusunu kanit olarak sakliyoruz.
         evidence_dir = Path(state["evidence_dir"])
         screenshot_name = f"{safe_name(request.node.nodeid)}.png"
         screenshot_path = evidence_dir / screenshot_name

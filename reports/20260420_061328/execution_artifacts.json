@@ -1,12 +1,12 @@
 {
-  "run_id": "20260419_193407",
+  "run_id": "20260420_061328",
   "project_root": "C:\\Users\\batuh\\OneDrive\\Masa\u00fcst\u00fc\\IBU_Connect_Selenium_Python_Tests",
-  "report_dir": "C:\\Users\\batuh\\OneDrive\\Masa\u00fcst\u00fc\\IBU_Connect_Selenium_Python_Tests\\reports\\20260419_193407",
-  "evidence_dir": "C:\\Users\\batuh\\OneDrive\\Masa\u00fcst\u00fc\\IBU_Connect_Selenium_Python_Tests\\reports\\20260419_193407\\evidence",
+  "report_dir": "C:\\Users\\batuh\\OneDrive\\Masa\u00fcst\u00fc\\IBU_Connect_Selenium_Python_Tests\\reports\\20260420_061328",
+  "evidence_dir": "C:\\Users\\batuh\\OneDrive\\Masa\u00fcst\u00fc\\IBU_Connect_Selenium_Python_Tests\\reports\\20260420_061328\\evidence",
   "tester_name": "batuh",
-  "execution_started_at": "2026-04-19T19:34:07+02:00",
-  "execution_finished_at": "2026-04-19T19:38:20+02:00",
-  "execution_date": "2026-04-19 19:34:07 +0200",
+  "execution_started_at": "2026-04-20T06:13:28+02:00",
+  "execution_finished_at": "2026-04-20T06:17:51+02:00",
+  "execution_date": "2026-04-20 06:13:28 +0200",
   "execution_command": "python -m pytest -v",
   "environment": {
     "operating_system": "Windows-11-10.0.26200-SP0",
@@ -38,10 +38,22 @@
       "description": "Attempt authentication with a payload such as `' OR 1=1` to confirm defensive validation."
     }
   ],
-  "bug_report": {},
+  "bug_report": {
+    "bug_id": "BUG-01",
+    "title": "Student login does not render an inline validation error for empty password submission",
+    "severity": "Medium",
+    "environment": "Windows-11-10.0.26200-SP0, Chrome 147.0.7727.57, Python 3.12.10, Selenium 4.43.0",
+    "steps_to_reproduce": [
+      "Open `https://batuhanakbasak.com/student/login`.",
+      "Enter a valid student email such as `ahmet@gmail.com`.",
+      "Leave the password field empty and click `Sign In`."
+    ],
+    "expected_result": "The application should render a clear inline validation message inside the form, consistent with the page's UI language and styling.",
+    "actual_result": "No application-level inline error message is shown. The browser's native required-field validation blocks submission instead."
+  },
   "automation_package": {
-    "folder": "C:\\Users\\batuh\\OneDrive\\Masa\u00fcst\u00fc\\IBU_Connect_Selenium_Python_Tests\\reports\\20260419_193407\\attached_python_package",
-    "zip_path": "C:\\Users\\batuh\\OneDrive\\Masa\u00fcst\u00fc\\IBU_Connect_Selenium_Python_Tests\\reports\\20260419_193407\\attached_python_package.zip",
+    "folder": "C:\\Users\\batuh\\OneDrive\\Masa\u00fcst\u00fc\\IBU_Connect_Selenium_Python_Tests\\reports\\20260420_061328\\attached_python_package",
+    "zip_path": "C:\\Users\\batuh\\OneDrive\\Masa\u00fcst\u00fc\\IBU_Connect_Selenium_Python_Tests\\reports\\20260420_061328\\attached_python_package.zip",
     "zip_name": "attached_python_package.zip",
     "contents": [
       "README.txt",
@@ -59,7 +71,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/",
-      "execution_date": "2026-04-19 19:34:12 +0200",
+      "execution_date": "2026-04-20 06:13:35 +0200",
       "evidence_reference": "evidence/test_home_navigation.py_test_homepage_loads_and_shows_role_panels.png",
       "current_url": "https://batuhanakbasak.com/",
       "page_title": "Multimedia Web Design Project"
@@ -69,7 +81,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/",
-      "execution_date": "2026-04-19 19:34:18 +0200",
+      "execution_date": "2026-04-20 06:13:41 +0200",
       "evidence_reference": "evidence/test_home_navigation.py_test_homepage_links_navigate_to_expected_pages.png",
       "current_url": "https://batuhanakbasak.com/",
       "page_title": "Multimedia Web Design Project"
@@ -79,7 +91,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/student/login",
-      "execution_date": "2026-04-19 19:34:24 +0200",
+      "execution_date": "2026-04-20 06:13:47 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_login_pages_have_core_fields_student_login-student_login.png",
       "current_url": "https://batuhanakbasak.com/student/login",
       "page_title": "Student Login | IBU Connect"
@@ -89,7 +101,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/organizer/organizer-login",
-      "execution_date": "2026-04-19 19:34:30 +0200",
+      "execution_date": "2026-04-20 06:13:52 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_login_pages_have_core_fields_organizer_organizer-login-organizer.png",
       "current_url": "https://batuhanakbasak.com/organizer/organizer-login",
       "page_title": "Organizer Login | IBU Connect"
@@ -99,7 +111,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/admin/login",
-      "execution_date": "2026-04-19 19:34:36 +0200",
+      "execution_date": "2026-04-20 06:13:58 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_login_pages_have_core_fields_admin_login-admin.png",
       "current_url": "https://batuhanakbasak.com/admin/login",
       "page_title": "Admin Login | University Event Management"
@@ -109,7 +121,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/student/login",
-      "execution_date": "2026-04-19 19:34:42 +0200",
+      "execution_date": "2026-04-20 06:14:03 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_student_page_has_registration_hint.png",
       "current_url": "https://batuhanakbasak.com/student/login",
       "page_title": "Student Login | IBU Connect"
@@ -119,7 +131,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/student/login",
-      "execution_date": "2026-04-19 19:34:57 +0200",
+      "execution_date": "2026-04-20 06:14:18 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_login_with_empty_password_stays_on_login_page_student_login-ahmet_gmail.com--_student_login.png",
       "current_url": "https://batuhanakbasak.com/student/login",
       "page_title": "Student Login | IBU Connect"
@@ -129,7 +141,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/organizer/organizer-login",
-      "execution_date": "2026-04-19 19:35:12 +0200",
+      "execution_date": "2026-04-20 06:14:32 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_login_with_empty_password_stays_on_login_page_organizer_organizer-login-mehmetali_gmail.com--_organizer_organizer-login.png",
       "current_url": "https://batuhanakbasak.com/organizer/organizer-login",
       "page_title": "Organizer Login | IBU Connect"
@@ -139,17 +151,27 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/admin/login",
-      "execution_date": "2026-04-19 19:35:26 +0200",
+      "execution_date": "2026-04-20 06:14:46 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_login_with_empty_password_stays_on_login_page_admin_login-admin1_example.com--_admin_login.png",
       "current_url": "https://batuhanakbasak.com/admin/login",
       "page_title": "Admin Login | University Event Management"
+    },
+    {
+      "nodeid": "test_login_forms.py::test_student_login_empty_password_shows_inline_app_error_message",
+      "status": "Fail",
+      "pytest_outcome": "failed",
+      "actual_result": "Observed result diverged from expectation: test_login_forms.py:155: AssertionError",
+      "execution_date": "2026-04-20 06:15:01 +0200",
+      "evidence_reference": "evidence/test_login_forms.py_test_student_login_empty_password_shows_inline_app_error_message.png",
+      "current_url": "https://batuhanakbasak.com/student/login",
+      "page_title": "Student Login | IBU Connect"
     },
     {
       "nodeid": "test_login_forms.py::test_login_with_wrong_password_shows_error[/student/login-ahmet@gmail.com-wrong-password-123-/student/login]",
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/student/login",
-      "execution_date": "2026-04-19 19:35:41 +0200",
+      "execution_date": "2026-04-20 06:15:15 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_login_with_wrong_password_shows_error_student_login-ahmet_gmail.com-wrong-password-123-_student_login.png",
       "current_url": "https://batuhanakbasak.com/student/login",
       "page_title": "Student Login | IBU Connect"
@@ -159,7 +181,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/organizer/organizer-login",
-      "execution_date": "2026-04-19 19:35:56 +0200",
+      "execution_date": "2026-04-20 06:15:29 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_login_with_wrong_password_shows_error_organizer_organizer-login-mehmetali_gmail.com-wrong-password-123-_organizer_organizer-login.png",
       "current_url": "https://batuhanakbasak.com/organizer/organizer-login",
       "page_title": "Organizer Login | IBU Connect"
@@ -169,7 +191,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/admin/login",
-      "execution_date": "2026-04-19 19:36:11 +0200",
+      "execution_date": "2026-04-20 06:15:44 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_login_with_wrong_password_shows_error_admin_login-admin1_example.com-wrong-password-123-_admin_login.png",
       "current_url": "https://batuhanakbasak.com/admin/login",
       "page_title": "Admin Login | University Event Management"
@@ -179,7 +201,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/student/dashboard.html",
-      "execution_date": "2026-04-19 19:36:58 +0200",
+      "execution_date": "2026-04-20 06:16:31 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_student_login_success.png",
       "current_url": "https://batuhanakbasak.com/student/dashboard.html",
       "page_title": "Student Dashboard | IBU Connect"
@@ -189,7 +211,7 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/organizer/dashboard.html",
-      "execution_date": "2026-04-19 19:37:38 +0200",
+      "execution_date": "2026-04-20 06:17:10 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_organizer_login_success.png",
       "current_url": "https://batuhanakbasak.com/organizer/dashboard.html",
       "page_title": "Organizer Dashboard"
@@ -199,17 +221,17 @@
       "status": "Pass",
       "pytest_outcome": "passed",
       "actual_result": "Expected behavior was observed during execution. Final URL: https://batuhanakbasak.com/admin/dashboard.html",
-      "execution_date": "2026-04-19 19:38:18 +0200",
+      "execution_date": "2026-04-20 06:17:49 +0200",
       "evidence_reference": "evidence/test_login_forms.py_test_admin_login_success.png",
       "current_url": "https://batuhanakbasak.com/admin/dashboard.html",
       "page_title": "Admin Dashboard"
     }
   ],
   "summary": {
-    "collected": 15,
-    "executed": 15,
+    "collected": 16,
+    "executed": 16,
     "passed": 15,
-    "failed": 0,
+    "failed": 1,
     "skipped": 0,
     "blocked": 0
   }

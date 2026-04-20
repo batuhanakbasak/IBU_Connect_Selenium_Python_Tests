@@ -4,6 +4,7 @@ from helpers import wait_for_elements_count, wait_for_page_contains
 
 
 def _link_label(anchor):
+    # Some anchors render empty `.text`, so we fall back to raw textContent.
     return (
         anchor.text
         or anchor.get_attribute('textContent')
@@ -25,6 +26,7 @@ def test_homepage_links_navigate_to_expected_pages(driver):
     driver.get(BASE_URL)
     wait_for_page_contains(driver, 'student login')
     wait_for_elements_count(driver, By.TAG_NAME, 'a', count=3)
+    # Build a label -> href map so the assertions stay easy to read.
     links = {}
     for anchor in driver.find_elements(By.TAG_NAME, 'a'):
         label = _link_label(anchor)

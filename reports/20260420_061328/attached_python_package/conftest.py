@@ -20,10 +20,12 @@ from reporting import (
 
 
 def pytest_configure(config):
+    # Create one shared reporting state for the whole pytest session.
     config._execution_report_state = build_run_state(config.rootpath, config.invocation_params.args)
 
 
 def pytest_runtest_setup(item):
+    # Start each test as "Blocked" until pytest tells us the real outcome.
     item._execution_record = {
         "nodeid": item.nodeid,
         "status": "Blocked",
@@ -38,6 +40,7 @@ def pytest_runtest_setup(item):
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
+    # Capture setup/call/teardown results so we can build the final execution log.
     outcome = yield
     report = outcome.get_result()
     setattr(item, f"rep_{report.when}", report)
@@ -70,6 +73,7 @@ def pytest_runtest_makereport(item, call):
 
 
 def pytest_sessionfinish(session, exitstatus):
+    # When the run ends, generate the summary, zip package, and markdown/json reports.
     state = session.config._execution_report_state
     finalize_summary(state)
     build_attachment_package(state)
@@ -78,6 +82,7 @@ def pytest_sessionfinish(session, exitstatus):
 
 
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    #nereye yazıldığını terminalde gösterelim
     markdown_path = getattr(config, "_execution_report_markdown", None)
     if markdown_path:
         terminalreporter.write_sep("-", f"execution report written to {markdown_path}")
@@ -85,6 +90,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
 
 @pytest.fixture
 def driver(request):
+    # Every test gets a fresh Chrome session to reduce state leakage between scenarios.
     options = Options()
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
@@ -101,6 +107,7 @@ def driver(request):
 
     record = getattr(request.node, "_execution_record", None)
     if record is not None:
+        # Save the final browser state as evidence for the generated test report.
         evidence_dir = Path(state["evidence_dir"])
         screenshot_name = f"{safe_name(request.node.nodeid)}.png"
         screenshot_path = evidence_dir / screenshot_name

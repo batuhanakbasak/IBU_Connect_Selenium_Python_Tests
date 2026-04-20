@@ -172,11 +172,39 @@ def finalize_summary(run_state):
 
 
 def build_bug_report(run_state):
+    failed_tests = [test for test in run_state["tests"] if test["status"] == "Fail"]
+    environment = run_state["environment"]
+
+    inline_validation_bug = next(
+        (test for test in failed_tests if "test_student_login_empty_password_shows_inline_app_error_message" in test["nodeid"]),
+        None,
+    )
+    if inline_validation_bug:
+        return {
+            "bug_id": "BUG-01",
+            "title": "Student login does not render an inline validation error for empty password submission",
+            "severity": "Medium",
+            "environment": (
+                f"{environment['operating_system']}, {environment['browser_name']} {environment['browser_version']}, "
+                f"Python {environment['python_version']}, Selenium {environment['selenium_version']}"
+            ),
+            "steps_to_reproduce": [
+                "Open `https://batuhanakbasak.com/student/login`.",
+                "Enter a valid student email such as `ahmet@gmail.com`.",
+                "Leave the password field empty and click `Sign In`.",
+            ],
+            "expected_result": (
+                "The application should render a clear inline validation message inside the form, consistent with the page's UI language and styling."
+            ),
+            "actual_result": (
+                "No application-level inline error message is shown. The browser's native required-field validation blocks submission instead."
+            ),
+        }
+
     blocked_tests = [test for test in run_state["tests"] if test["status"] == "Blocked"]
     if not blocked_tests:
         return {}
 
-    environment = run_state["environment"]
     blocked_case_list = ", ".join(test["nodeid"] for test in blocked_tests)
 
     return {

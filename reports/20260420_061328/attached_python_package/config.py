@@ -2,6 +2,7 @@ import os
 
 
 def _env(name, default=""):
+    # Allow local or CI environments to override hardcoded defaults safely.
     return os.getenv(name, default).strip()
 
 

@@ -43,6 +43,7 @@ def test_student_page_has_registration_hint(driver):
 
 
 def _fill_login_form(driver, email, password):
+    # Centralize typing so both positive and negative login tests use the same flow.
     email_field = email_input(driver)
     password_field = password_input(driver)
 
@@ -58,6 +59,7 @@ def _fill_login_form(driver, email, password):
 
 
 def _login_feedback_text(driver):
+    # Role pages use slightly different message containers, so we scan common ones.
     for selector in ('[data-login-message]', '.auth-message', '.inline-message'):
         for element in driver.find_elements(By.CSS_SELECTOR, selector):
             text = element.text.strip()
@@ -67,6 +69,7 @@ def _login_feedback_text(driver):
 
 
 def _open_login_page(driver, path):
+    # Clear cookies and storage first so a previous successful login does not affect this test.
     login_url = BASE_URL + path
     driver.get(login_url)
     driver.delete_all_cookies()
@@ -76,10 +79,12 @@ def _open_login_page(driver, path):
 
 
 def _field_validation_message(driver, field):
+    # Browser-native validation is useful in negative tests when the app shows no inline error.
     return driver.execute_script("return arguments[0].validationMessage || '';", field).strip()
 
 
 def _login_should_succeed(driver, path, expected_path, email, password):
+    # Positive login flow: submit credentials and poll until we reach a dashboard URL.
     _open_login_page(driver, path)
     _fill_login_form(driver, email, password)
     submit_button(driver).click()
@@ -137,6 +142,22 @@ def test_login_with_empty_password_stays_on_login_page(driver, path, email, pass
     )
 
 
+def test_student_login_empty_password_shows_inline_app_error_message(driver):
+    # This is an intentional bug-catching test for the report's Bug Report section.
+    _open_login_page(driver, '/student/login')
+    _, password_field = _fill_login_form(driver, STUDENT_EMAIL, '')
+    submit_button(driver).click()
+
+    validation_message = _field_validation_message(driver, password_field)
+    feedback = _login_feedback_text(driver)
+
+    assert '/student/login' in driver.current_url.lower()
+    assert feedback, (
+        'No inline application error message was rendered for empty password submission. '
+        f'Browser-native validation handled it instead: {validation_message!r}'
+    )
+
+
 @pytest.mark.parametrize(
     "path,email,wrong_password,expected_login_path",
     [
@@ -146,6 +167,7 @@ def test_login_with_empty_password_stays_on_login_page(driver, path, email, pass
     ],
 )
 def test_login_with_wrong_password_shows_error(driver, path, email, wrong_password, expected_login_path):
+    # Negative login flow: wrong password should keep the user on login and surface an error.
     _open_login_page(driver, path)
     _fill_login_form(driver, email, wrong_password)
     submit_button(driver).click()
